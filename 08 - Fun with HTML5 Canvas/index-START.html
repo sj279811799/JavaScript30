@@ -7,11 +7,109 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let isDrawing = false;
+  // 上一次鼠标位置
+	let lastX = 0;
+	let lastY = 0;
+
+  // 线宽
+  ctx.lineWidth = 90;
+  // 线形
+	ctx.lineCap = "round";
+  // 两线相交拐点的类型
+	ctx.lineJoin = "round";
+  // 边线颜色
+	ctx.strokeStyle = "#f00";
+  // 内部颜色
+	ctx.fillStyle = "#f00";
+
+  // 颜色
+  let hue = 0;
+	let direction = true;
+	let x = 0;
+	let y = 0;
+
+  function draw(e) {
+		if(!isDrawing) return;
+		
+		if(e.type == "mousemove"){
+			x = e.offsetX;
+			y = e.offsetY;
+		} else  {
+      // 处理触摸屏操作
+			x = e.changedTouches[0].clientX;
+			y = e.changedTouches[0].clientY;
+		}
+		
+    //		彩虹效果(颜色从0 ~ 360)
+		ctx.strokeStyle = `hsl(${ hue }, 90%, 50%)`;	
+		if(hue >= 360) hue = 0;
+		hue++;
+		
+    //		水墨效果
+    //		ctx.strokeStyle = `rgba(0, 0, 0, ${ hue })`;			
+    //		if(hue >= 0.7) hue = 0;
+    //		hue += 0.01;
+  
+    //		控制笔触大小
+		if(ctx.lineWidth > 120 || ctx.lineWidth < 10) {
+			direction = !direction;
+		} 
+		if (direction) {
+			ctx.lineWidth++;
+		} else {
+			ctx.lineWidth--;
+		}
+		
+    //		控制绘制路径
+		ctx.beginPath();
+
+		ctx.moveTo(lastX, lastY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
+    //		lastX = x;
+    //		lastY = y;
+    [lastX, lastY] = [x, y];
+	}
+
+  // 鼠标按下，开始画，初始化位置
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+
+  // 鼠标移动画线
+	canvas.addEventListener('mousemove', draw);
+  // 停止画线
+	canvas.addEventListener('mouseup', () => isDrawing = false);
+	canvas.addEventListener('mouseout', () => isDrawing = false);
+	
+  // 手机端触屏
+	canvas.addEventListener('touchstart', (e) => {
+		isDrawing = true;
+		lastX = e.changedTouches[0].clientX;
+		lastY = e.changedTouches[0].clientY;
+	});
+	canvas.addEventListener('touchmove', draw);
+	canvas.addEventListener('touchend', () => isDrawing = false);
+	canvas.addEventListener('touchcancel', () => isDrawing = false);
+
 </script>
 
 <style>
   html, body {
     margin:0;
+    overflow: hidden;
+  }
+
+  canvas {
+    overflow: auto;
   }
 </style>
 
