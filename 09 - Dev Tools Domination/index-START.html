@@ -17,30 +17,61 @@
       p.style.fontSize = '50px';
     }
 
+    const p = document.querySelector('p');
+
     // Regular
-
+    console.log("我只是 console 世界的一介草民");
     // Interpolated
-
+    console.log("输出string %s ", "log");
+	  console.log("输出float %f ", 1.23);
+    console.log("输出object %o ", {1.23: 12});
+    console.log("输出int %d ", 1.23);
     // Styled
-
+    console.log("%c不同样式的输出效果", "color: #00fdff; font-size: 2em;");
     // warning!
-
+    console.warn("warning! 我可警告你哦~")
     // Error :|
-
+    console.error("error~别又来报错了！╭(╯^╰)╮");
     // Info
-
-    // Testing
-
+    console.info("Talk is cheap. Show me the code");
+    // Testing 断言
+    console.assert(1 === 1, "（这句发布时删除）");
+	  console.assert(1 === 0, "看看看，失策了吧");
+	  console.assert(p.innerHTML.match("她"), "我这儿才没有她这个人");
     // clearing
-
+    // console.clear();
     // Viewing DOM Elements
-
+	  console.log(p); // 打印节点
+	  console.dir(p); // 打印属性对象
     // Grouping together
+    dogs.forEach(dog => {
+      console.group();
+      // console.groupCollapsed(); // 收起的列表
+      console.log(`${dog.name}`);
+      console.log(`${dog.age}`);
+      console.log(`${dog.name} 有 ${dog.age} 岁了`);
+      console.groupEnd(); // 当前group结束，否则会在子集继续
+    });
 
-    // counting
-
-    // timing
-
+    console.table(dogs); // 表格展示
+	  console.table(dogs, ["age"]); // 数据过滤
+    // counting 计数，相同的输出+1
+    console.count("（读来过反）羊只");
+	  console.count("（读来过反）羊只");
+	  console.count("（读来过反）鱼条");
+	  console.count("（读来过反）羊只");
+	  console.count("（读来过反）羊只");
+	  console.count("（读来过反）鱼条");
+	  console.count("（读来过反）鱼条");
+	  console.count("（读来过反）羊只");
+    // timing 输出时间间隔
+    console.time('fetch my data');
+	  fetch("https://api.github.com/users/soyaine")
+		  .then(data => data.json())
+		  .then(data => {
+		  console.timeEnd('fetch my data');
+		  console.log(data);
+	  });
   </script>
 </body>
 </html>
