@@ -104,6 +104,44 @@
   </div>
 
 <script>
+  const boxs = document.querySelectorAll('.inbox input[type="checkbox"]');
+  const boxArr = Array.from(boxs);
+
+  let lastChecked;
+
+  // check初始为false，当遇到last或this，翻转check，则勾选选中范围
+  function handleCheck0(e) {
+		let inBetween = false;
+		if(e.shiftKey && this.checked){
+			boxs.forEach(input => {
+				console.log(input);
+				if(input === lastChecked || input ===this) {
+					inBetween = !inBetween;
+				}
+				if(inBetween) {
+					console.log("on");
+					input.checked = true;
+				}
+		  });
+		}
+		lastChecked = this;
+	}
+
+  // 支持反选，上一次点击事件决定取消还是选中；利用两次点击的索引取出需要处理的项，然后取消/选中
+  let onOff = false;
+  function handleCheck1(e) {
+		if(!lastChecked) lastChecked = this;
+		onOff = lastChecked.checked ? true : false;
+		if(e.shiftKey) {
+			let start = boxArr.indexOf(this);
+			let end = boxArr.indexOf(lastChecked);
+			boxArr.slice(Math.min(start, end), Math.max(start, end) + 1)
+					   .forEach(input => input.checked = onOff);
+		}
+		lastChecked = this;
+	}
+
+  boxs.forEach(box => box.addEventListener('click', handleCheck1));
 </script>
 </body>
 </html>
