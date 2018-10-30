@@ -5,6 +5,7 @@
   <title>Videos</title>
 </head>
 <body>
+  <p>总播放时间为：<span id="totaltime"></span></p>
   <ul class="videos">
     <li data-time="5:43">
       Video 1
@@ -182,6 +183,23 @@
     </li>
   </ul>
 <script>
+  //结果格式化函数
+  function showRes(seconds) {
+      var sec = seconds % 60;
+      var hour = Math.floor(seconds/3600);
+      var min = (seconds - 3600*hour - sec)/60;
+      document.querySelector('#totaltime').innerHTML = `${hour}小时${min}分${sec}秒`;
+  }
+
+  // 计算总秒
+  var result = Array.from(document.querySelectorAll('li')).map(function(item){
+     var tempStr = item.dataset.time.split(':');
+     return parseInt(tempStr[0],10)*60+parseInt(tempStr[1],10);
+  }).reduce(function(a,b){
+     return a+b;
+  },0);
+
+  showRes(result);
 </script>
 </body>
 </html>
