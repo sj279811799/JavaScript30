@@ -16,7 +16,7 @@ window.onload = function() {
     }
 
     //调用摄像头数据
-            askWebcam();
+    askWebcam();
 
     //绑定change事件动态修改图片颜色
     slider.onchange = function(e) {
