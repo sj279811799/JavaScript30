@@ -16,7 +16,7 @@
   //新建一个语音识别对象
   var speech = new webkitSpeechRecognition();
   speech.interimResults = true;
-  speech.lang = 'en-US';
+  speech.lang = 'zh-CN';
   speech.start();
 
 //有结果返回时
@@ -29,7 +29,7 @@
        //将结果输出在页面上
         words.innerHTML = results;
       }
-
+    )
 
 //开始捕获到音频时
 speech.onaudiostart = function(e) {
