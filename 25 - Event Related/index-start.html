@@ -50,8 +50,8 @@
         let two = document.querySelector('.two');
         let three = document.querySelector('.three');
         divs.forEach(div => div.addEventListener('click', logText, {
-            once: true,
-            capture: false
+            once: false, // 控制点击触发次数，true：只触发一次
+            capture: false, // 控制点击事件触发的顺序，true：由外向内。
         }));
 
         // one.addEventListener('click', logText1, {
@@ -67,7 +67,7 @@
        
         function logText(e) {
             console.log(this.classList.value);
-            // e.stopPropagation();
+            e.stopPropagation(); // 阻止冒泡
         }
 
         function logText1(e) {
