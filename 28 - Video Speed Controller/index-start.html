@@ -15,6 +15,21 @@
   </div>
 
 <script>
+  const speed = document.querySelector(".speed");
+  const speedBar = speed.querySelector(".speed-bar");
+  const video = document.querySelector(".flex");
+
+  function changeSpeed(e) {
+    const height = e.offsetY; // 点击处距离速度条顶部的距离
+    const percentage = e.offsetY / speed.offsetHeight; // 获得百分比
+    const min = 0.5;
+    const max = 5;
+    const playbackRate = percentage * (max - min) + min; // 最小0.5
+    speedBar.style.height = Math.round(percentage*100) + '%';
+    speedBar.textContent = playbackRate.toFixed(2) + '×';
+    video.playbackRate = playbackRate;
+  }
+  speed.addEventListener('click', changeSpeed);
 </script>
 </body>
 </html>
