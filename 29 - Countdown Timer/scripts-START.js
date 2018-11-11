@@ -49,13 +49,13 @@ function updateTimer(){
 
     // 设置新的Timer
     timer = setInterval(function(){
-	if(left == 0){
-		endTime.innerHTML = 'End';
-        clearInterval(timer);
-	}else{
-		left -= 1;
-		leftTime.innerHTML = left;
-	}
-},1000);
+		if(left == 0){
+			endTime.innerHTML = 'End';
+			clearInterval(timer);
+		}else{
+			left -= 1;
+			leftTime.innerHTML = left;
+		}
+	},1000);
 }
 
